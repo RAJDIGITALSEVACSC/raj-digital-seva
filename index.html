@@ -567,11 +567,11 @@ const results = (window.VOTERS_DATA || []).filter(v =>
 
   box.innerHTML=results.map(v=>`
     <div style="padding:15px;border:1px solid #ddd;border-radius:12px;margin-bottom:10px;">
-      <b>🗳️ Voter Found</b><br><br>
-      Voter ID: <b>${v.epic}</b><br>
-      House No: <b>${v.houseNo}</b><br>
-      Serial: ${v.serial}
-    </div>
+      <b>📦 Voter Found</b><br><br>
+Name: <b>${v.name || "Name unavailable"}</b><br>
+Voter ID: <b>${v.epic}</b><br>
+House No: <b>${v.houseNo}</b><br>
+Serial No: <b>${v.serial}</b>
   `).join("");
 }
 </script><script src="./voters-data.js"></script>
