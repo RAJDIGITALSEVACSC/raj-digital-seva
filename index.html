@@ -82,7 +82,7 @@ footer{padding:18px 0 80px;text-align:center;color:#657086;font-size:13px}
 <div class="card" onclick="openJobsForm()"><span>💼</span><span data-te="ఉద్యోగాలు" data-en="Jobs">ఉద్యోగాలు</span></div>
 <div class="card"><span>📍</span><span data-te="సంప్రదించండి" data-en="Contact">సంప్రదించండి</div>
 <div class="card"><span>ℹ️</span><span data-te="మా గురించి" data-en="About Us">మా గురించి</div>
-<a class="card voter" href="#voter"><span>🗳️</span><span data-te="45వ వార్డు ఓటర్ సెర్చ్" data-en="Ward 45 Voter Search">45వ వార్డు ఓటర్ సెర్చ్</a>
+<a class="card voter" href="javascript:void(0)" onclick="openVoterSearch()">><span>🗳️</span><span data-te="45వ వార్డు ఓటర్ సెర్చ్" data-en="Ward 45 Voter Search">45వ వార్డు ఓటర్ సెర్చ్</a>
 </div>
 
 
@@ -512,4 +512,62 @@ window.submitJobApplication=async function(){
 </script>
 
 <script src="./voters-test.js"></script>
+  <div id="voterSearchBox" style="display:none;position:fixed;inset:0;background:#f5f7fb;z-index:99999;overflow:auto;padding:20px;">
+  <div style="max-width:600px;margin:auto;background:white;padding:20px;border-radius:18px;">
+    
+    <button onclick="closeVoterSearch()" style="border:0;background:#eee;padding:10px 16px;border-radius:10px;">← Back</button>
+
+    <h2>🗳️ Ward 45 Voter Search</h2>
+    <p>పేరు / Voter ID / House No. ద్వారా వెతకండి</p>
+
+    <input id="voterQuery"
+      placeholder="ఉదా: NKD3176906"
+      style="width:100%;padding:15px;border:1px solid #ccc;border-radius:12px;font-size:17px;box-sizing:border-box;">
+
+    <button onclick="runVoterSearch()"
+      style="width:100%;margin-top:12px;padding:14px;border:0;border-radius:12px;background:#1261d6;color:white;font-size:17px;font-weight:bold;">
+      🔎 Search
+    </button>
+
+    <div id="voterResults" style="margin-top:18px;"></div>
+  </div>
+</div>
+
+<script>
+function openVoterSearch(){
+  document.getElementById("voterSearchBox").style.display="block";
+}
+
+function closeVoterSearch(){
+  document.getElementById("voterSearchBox").style.display="none";
+}
+
+function runVoterSearch(){
+  const q=document.getElementById("voterQuery").value.trim();
+  const box=document.getElementById("voterResults");
+
+  if(!q){
+    box.innerHTML="<p>Search value enter చేయండి.</p>";
+    return;
+  }
+
+  const results=window.searchTestVoters
+    ? window.searchTestVoters(q)
+    : [];
+
+  if(!results.length){
+    box.innerHTML="<p>❌ Voter record దొరకలేదు.</p>";
+    return;
+  }
+
+  box.innerHTML=results.map(v=>`
+    <div style="padding:15px;border:1px solid #ddd;border-radius:12px;margin-bottom:10px;">
+      <b>🗳️ Voter Found</b><br><br>
+      Voter ID: <b>${v.epic}</b><br>
+      House No: <b>${v.houseNo}</b><br>
+      Serial: ${v.serial}
+    </div>
+  `).join("");
+}
+</script>
 </body></html>
