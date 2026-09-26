@@ -555,7 +555,7 @@ function runVoterSearch(){
 
 const results = (window.VOTERS_DATA || []).filter(v =>
   String(v.epic || "").toLowerCase().includes(s) ||
-  String(v.houseNo || "").toLowerCase().includes(s) ||
+  String(v.houseNo || "").toLowerCase() === s ||
   String(v.serial || "").toLowerCase().includes(s) ||
   String(v.name || "").toLowerCase().includes(s)
 );
