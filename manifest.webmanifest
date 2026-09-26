@@ -1,9 +1,9 @@
 {
-  "id": "/",
+  "id": "/raj-digital-seva/",
   "name": "రాజ్ డిజిటల్ సేవ",
   "short_name": "రాజ్ డిజిటల్ సేవ",
-  "start_url": "/?source=pwa",
-  "scope": "/",
+  "start_url": "/raj-digital-seva/?source=pwa",
+  "scope": "/raj-digital-seva/",
   "display": "standalone",
   "display_override": [
     "standalone",
@@ -13,13 +13,13 @@
   "theme_color": "#0b57d0",
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/raj-digital-seva/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/raj-digital-seva/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

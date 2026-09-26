@@ -7,9 +7,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="రాజ్ డిజిటల్ సేవ">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/icon-192.png">
-<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="manifest" href="/raj-digital-seva/manifest.webmanifest">
+<link rel="icon" href="/raj-digital-seva/icon-192.png">
+<link rel="apple-touch-icon" href="/raj-digital-seva/icon-192.png">
 <title>రాజ్ డిజిటల్ సేవ</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:"Noto Sans Telugu",system-ui,Arial,sans-serif;background:#f5f7fb;color:#172033}
@@ -168,7 +168,7 @@ q('loadCustomers').onclick=loadCustomers;
 q('logoutBtn').onclick=async()=>{await sb.auth.signOut();q('userBox').classList.add('hidden');q('adminPanel').classList.add('hidden');q('authBox').classList.remove('hidden');adminMode=false;setMode('login')};
 (async()=>{const {data}=await sb.auth.getSession();if(data.session)showUser(data.session.user)})();
 
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/sw.js'))}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/raj-digital-seva/sw.js', { scope: '/raj-digital-seva/' }))}
 let deferredPrompt; const b=document.getElementById('install');
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;b.style.display='block'});
 b.onclick=async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;b.style.display='none'};
