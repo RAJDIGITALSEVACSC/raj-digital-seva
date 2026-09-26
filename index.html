@@ -551,9 +551,14 @@ function runVoterSearch(){
     return;
   }
 
-  const results=window.searchTestVoters
-    ? window.searchTestVoters(q)
-    : [];
+  const s = q.toLowerCase();
+
+const results = (window.VOTERS_DATA || []).filter(v =>
+  String(v.epic || "").toLowerCase().includes(s) ||
+  String(v.houseNo || "").toLowerCase().includes(s) ||
+  String(v.serial || "").toLowerCase().includes(s) ||
+  String(v.name || "").toLowerCase().includes(s)
+);
 
   if(!results.length){
     box.innerHTML="<p>❌ Voter record దొరకలేదు.</p>";
