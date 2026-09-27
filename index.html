@@ -219,7 +219,7 @@ function mobileFromUser(u){const em=(u.email||'').split('@')[0];return u.phone||
 async function loadCustomers(){const msg=q('customerMsg'),list=q('customerList'),count=q('customerCount');msg.textContent=t('లోడ్ అవుతోంది...','Loading...');list.innerHTML='';count.classList.add('hidden');const {data,error}=await sb.rpc('admin_list_users');if(error){msg.textContent=t('కస్టమర్ల వివరాలు తెరవలేకపోయాం: ','Could not load customers: ')+error.message;return}msg.textContent='';count.textContent=t('మొత్తం రిజిస్టర్ ఖాతాలు: ','Total registered accounts: ')+data.length;count.classList.remove('hidden');data.forEach((u,i)=>{const row=document.createElement('div');row.className='customerrow';row.innerHTML='<b>'+t('కస్టమర్ ','Customer ')+(i+1)+'</b>'+t('📱 మొబైల్: ','📱 Mobile: ')+mobileFromUser(u)+'<br>'+t('🗓️ రిజిస్ట్రేషన్: ','🗓️ Registered: ')+fmtDate(u.created_at)+'<br>'+t('🕒 చివరి లాగిన్: ','🕒 Last login: ')+fmtDate(u.last_sign_in_at)+'<br><span class="muted">ID: '+u.id+'</span>';list.appendChild(row)})}
 q('loadCustomers').onclick=loadCustomers;
 q('logoutBtn').onclick=async()=>{await sb.auth.signOut();q('userBox').classList.add('hidden');q('adminPanel').classList.add('hidden');q('authBox').classList.remove('hidden');adminMode=false;setMode('login')};
-(async()=>{const {data}=await sb.auth.getSession();if(data.session)showUser(data.session.user)})();
+
 
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/raj-digital-seva/sw.js', { scope: '/raj-digital-seva/' }))}
 let deferredPrompt; const b=document.getElementById('install');
