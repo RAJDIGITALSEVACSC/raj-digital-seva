@@ -57,10 +57,63 @@ footer{padding:18px 0 80px;text-align:center;color:#657086;font-size:13px}
 .jobs-submit{background:#1261d6;color:white}.jobs-cancel{background:#e9eef7;color:#172033}
 @media(max-width:600px){.jobs-grid{grid-template-columns:1fr}.jobs-field.full{grid-column:auto}}
 
+  #logoutBtn{
+  position:fixed !important;
+  top:15px;
+  right:15px;
+  z-index:9999;
+  width:auto !important;
+  margin:0 !important;
+  padding:9px 14px !important;
+  border-radius:20px !important;
+  box-shadow:0 4px 12px rgba(0,0,0,.18);
+}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+  <!-- Raj Digital Seva Splash Screen -->
+<div id="splashScreen" style="
+position:fixed;
+inset:0;
+z-index:999999;
+background:linear-gradient(135deg,#0b57d0,#063b92);
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+color:white;
+font-family:Arial,sans-serif;
+">
+  <img src="icon-192.png"
+       style="width:120px;height:120px;border-radius:28px;
+       box-shadow:0 10px 30px rgba(0,0,0,.25);"
+       alt="Raj Digital Seva">
+
+  <h1 style="margin:25px 0 8px;font-size:30px;">
+    Raj Digital Seva
+  </h1>
+
+  <div style="font-size:15px;opacity:.9;">
+    Digital Services at Your Fingertips
+  </div>
+</div>
+
+<script>
+window.addEventListener("load", function () {
+  setTimeout(function () {
+    const splash = document.getElementById("splashScreen");
+    if (splash) {
+      splash.style.transition = "opacity .5s ease";
+      splash.style.opacity = "0";
+
+      setTimeout(function () {
+        splash.style.display = "none";
+      }, 500);
+    }
+  }, 2000);
+});
+</script>
 <header><div class="langbar"><button class="langbtn" id="langBtn">English</button></div><h1 data-te="రాజ్ డిజిటల్ సేవ" data-en="Raj Digital Seva">రాజ్ డిజిటల్ సేవ</h1><p data-te="కల్లూరు ఎస్టేట్, కర్నూలు" data-en="Kalluru Estate, Kurnool">కల్లూరు ఎస్టేట్, కర్నూలు</p></header>
 <main>
 <div class="authbox" id="authBox">
