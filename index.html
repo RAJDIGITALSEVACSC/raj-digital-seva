@@ -178,8 +178,18 @@ window.addEventListener("load", function () {
 
 <div class="section"><b data-te="రాజ్ డిజిటల్ సేవ" data-en="Raj Digital Seva">రాజ్ డిజిటల్ సేవ</b><br><span data-te="కల్లూరు ఎస్టేట్, కర్నూలు" data-en="Kalluru Estate, Kurnool">కల్లూరు ఎస్టేట్, కర్నూలు</span><br><span data-te="ఫోన్: 9966773511" data-en="Phone: 9966773511">ఫోన్: 9966773511</span></div>
 <footer data-te="రాజ్ డిజిటల్ సేవ • PWA" data-en="Raj Digital Seva • PWA">రాజ్ డిజిటల్ సేవ • PWA</footer>
+<style>
+body:not(.logged-in) main > *:not(#authBox),
+body:not(.logged-in) nav {
+  display: none !important;
+}
+</style>
+
 </main>
 
+
+
+  
 <nav><span>🏠<br data-te="హోమ్" data-en="Home">హోమ్</span><span>🧾<br data-te="సేవలు" data-en="Services">సేవలు</span><span>📋<br data-te="అభ్యర్థనలు" data-en="Requests">అభ్యర్థనలు</span><span>🔔<br data-te="అలర్ట్స్" data-en="Alerts">అలర్ట్స్</span><span>📍<br data-te="కాంటాక్ట్" data-en="Contact">కాంటాక్ట్</span></nav>
 <script>
 let currentLang=localStorage.getItem('rds_lang')||'te';
@@ -212,13 +222,34 @@ q('authAction').onclick=async()=>{
    if(adminMode && !isAdmin){await sb.auth.signOut();q('authMsg').textContent=t('ఈ ఖాతాకు అడ్మిన్ అనుమతి లేదు.','This account does not have admin access.');return}
    showUser(user);
  }catch(e){q('authMsg').textContent=t('లోపం: ','Error: ')+(e.message||t('మళ్లీ ప్రయత్నించండి','Please try again'))}
+  function showUser(user){
+  document.body.classList.add('logged-in');
+
+  document.getElementById('authBox').classList.add('hidden');
+
+  const userBox = document.getElementById('userBox');
+  if(userBox) userBox.classList.remove('hidden');
+
+  const isAdmin = user?.app_metadata?.role === 'admin';
+  const adminPanel = document.getElementById('adminPanel');
+
+  if(adminPanel){
+    adminPanel.classList.toggle('hidden', !isAdmin);
+  }
+}
 };
 function showUser(user){const ph=user?.user_metadata?.phone||cleanPhone((user?.email||'').split('@')[0]);const isAdmin=user?.app_metadata?.role==='admin';q('authBox').classList.add('hidden');q('userBox').classList.remove('hidden');q('adminPanel').classList.toggle('hidden',!isAdmin);q('welcomeText').textContent=(isAdmin?t('🔐 అడ్మిన్: ','🔐 Admin: '):t('👤 కస్టమర్: ','👤 Customer: '))+ph}
 function fmtDate(v){if(!v)return t('లేదు','Never');try{return new Date(v).toLocaleString(currentLang==='te'?'te-IN':'en-IN')}catch{return v}}
 function mobileFromUser(u){const em=(u.email||'').split('@')[0];return u.phone||(/^\d{10}$/.test(em)?em:'-')}
 async function loadCustomers(){const msg=q('customerMsg'),list=q('customerList'),count=q('customerCount');msg.textContent=t('లోడ్ అవుతోంది...','Loading...');list.innerHTML='';count.classList.add('hidden');const {data,error}=await sb.rpc('admin_list_users');if(error){msg.textContent=t('కస్టమర్ల వివరాలు తెరవలేకపోయాం: ','Could not load customers: ')+error.message;return}msg.textContent='';count.textContent=t('మొత్తం రిజిస్టర్ ఖాతాలు: ','Total registered accounts: ')+data.length;count.classList.remove('hidden');data.forEach((u,i)=>{const row=document.createElement('div');row.className='customerrow';row.innerHTML='<b>'+t('కస్టమర్ ','Customer ')+(i+1)+'</b>'+t('📱 మొబైల్: ','📱 Mobile: ')+mobileFromUser(u)+'<br>'+t('🗓️ రిజిస్ట్రేషన్: ','🗓️ Registered: ')+fmtDate(u.created_at)+'<br>'+t('🕒 చివరి లాగిన్: ','🕒 Last login: ')+fmtDate(u.last_sign_in_at)+'<br><span class="muted">ID: '+u.id+'</span>';list.appendChild(row)})}
 q('loadCustomers').onclick=loadCustomers;
-q('logoutBtn').onclick=async()=>{await sb.auth.signOut();q('userBox').classList.add('hidden');q('adminPanel').classList.add('hidden');q('authBox').classList.remove('hidden');adminMode=false;setMode('login')};
+q('logoutBtn').onclick=async()=>{
+  await sb.auth.signOut();
+  document.body.classList.remove('logged-in');
+  q('userBox').classList.add('hidden');
+  q('adminPanel').classList.add('hidden');
+  q('authBox').classList.remove('hidden');
+};
 
 
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/raj-digital-seva/sw.js', { scope: '/raj-digital-seva/' }))}
